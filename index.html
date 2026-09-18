@@ -6,6 +6,10 @@
 
   <title>NOVA — Coffee & Kitchen</title>
 
+  <script type="module"
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js">
+  </script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -74,6 +78,14 @@
       box-shadow: 0 5px 20px rgba(0,0,0,0.06);
     }
 
+    .food-view {
+      height: 260px;
+      width: 100%;
+      border-radius: 16px;
+      background: #eee8df;
+      margin-bottom: 15px;
+    }
+
     .food-placeholder {
       height: 180px;
       border-radius: 16px;
@@ -139,76 +151,119 @@
     <p>Explore our menu and experience your food in 3D.</p>
   </section>
 
-  <div class="section-title">
-    Signature Menu
-  </div>
+  <div class="section-title">Signature Menu</div>
 
   <main class="menu">
 
+    <!-- BURGER -->
     <div class="item">
-      <div class="food-placeholder">🍔</div>
+
+      <model-viewer
+        class="food-view"
+        src="hamburger-060fd6d.glb"
+        camera-controls
+        auto-rotate
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        shadow-intensity="1"
+        exposure="1">
+      </model-viewer>
+
       <h3>NOVA Classic Burger</h3>
-      <p class="description">Juicy grilled patty, fresh vegetables and our signature sauce.</p>
+
+      <p class="description">
+        Juicy grilled patty, fresh vegetables and our signature sauce.
+      </p>
+
       <div class="bottom">
         <span class="price">₹249</span>
-        <button class="ar-button">VIEW IN AR</button>
+        <button
+          class="ar-button"
+          onclick="document.querySelector('model-viewer').activateAR()">
+          VIEW IN AR
+        </button>
       </div>
+
     </div>
 
+
+    <!-- PIZZA -->
     <div class="item">
       <div class="food-placeholder">🍕</div>
       <h3>Truffle Cheese Pizza</h3>
-      <p class="description">Creamy cheese, herbs and a touch of truffle.</p>
+      <p class="description">
+        Creamy cheese, herbs and a touch of truffle.
+      </p>
       <div class="bottom">
         <span class="price">₹329</span>
         <button class="ar-button">VIEW IN AR</button>
       </div>
     </div>
 
+
+    <!-- PASTA -->
     <div class="item">
       <div class="food-placeholder">🍝</div>
       <h3>Creamy Alfredo Pasta</h3>
-      <p class="description">Silky parmesan sauce with perfectly cooked pasta.</p>
+      <p class="description">
+        Silky parmesan sauce with perfectly cooked pasta.
+      </p>
       <div class="bottom">
         <span class="price">₹279</span>
         <button class="ar-button">VIEW IN AR</button>
       </div>
     </div>
 
+
+    <!-- SANDWICH -->
     <div class="item">
       <div class="food-placeholder">🥪</div>
       <h3>Grilled Club Sandwich</h3>
-      <p class="description">Crispy grilled bread with fresh vegetables and cheese.</p>
+      <p class="description">
+        Crispy grilled bread with fresh vegetables and cheese.
+      </p>
       <div class="bottom">
         <span class="price">₹229</span>
         <button class="ar-button">VIEW IN AR</button>
       </div>
     </div>
 
+
+    <!-- FRIES -->
     <div class="item">
       <div class="food-placeholder">🍟</div>
       <h3>Peri Peri Fries</h3>
-      <p class="description">Crispy fries tossed in our signature peri peri seasoning.</p>
+      <p class="description">
+        Crispy fries tossed in our signature peri peri seasoning.
+      </p>
       <div class="bottom">
         <span class="price">₹149</span>
         <button class="ar-button">VIEW IN AR</button>
       </div>
     </div>
 
+
+    <!-- LATTE -->
     <div class="item">
       <div class="food-placeholder">☕</div>
       <h3>Iced Spanish Latte</h3>
-      <p class="description">Smooth espresso, creamy milk and a hint of sweetness.</p>
+      <p class="description">
+        Smooth espresso, creamy milk and a hint of sweetness.
+      </p>
       <div class="bottom">
         <span class="price">₹189</span>
         <button class="ar-button">VIEW IN AR</button>
       </div>
     </div>
 
+
+    <!-- CHEESECAKE -->
     <div class="item">
       <div class="food-placeholder">🍰</div>
       <h3>Lotus Biscoff Cheesecake</h3>
-      <p class="description">Creamy cheesecake topped with Biscoff crumbs.</p>
+      <p class="description">
+        Creamy cheesecake topped with Biscoff crumbs.
+      </p>
       <div class="bottom">
         <span class="price">₹219</span>
         <button class="ar-button">VIEW IN AR</button>
