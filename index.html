@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NOVA — Coffee & Kitchen</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f3ed;
+      color: #1f1b17;
+    }
+
+    header {
+      padding: 35px 20px 25px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 5px;
+    }
+
+    .tagline {
+      margin-top: 8px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .hero {
+      margin: 10px 18px 30px;
+      padding: 35px 25px;
+      border-radius: 24px;
+      background: #27221e;
+      color: white;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #d8d0c7;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      padding: 0 20px 15px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .menu {
+      padding: 0 18px 40px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .item {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .food-placeholder {
+      height: 180px;
+      border-radius: 16px;
+      background: #eee8df;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .item h3 {
+      font-size: 19px;
+      margin-bottom: 6px;
+    }
+
+    .description {
+      color: #777;
+      font-size: 14px;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .price {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .ar-button {
+      background: #27221e;
+      color: white;
+      border: none;
+      padding: 11px 15px;
+      border-radius: 30px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #888;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">NOVA</div>
+    <div class="tagline">COFFEE & KITCHEN · JAIPUR</div>
+  </header>
+
+  <section class="hero">
+    <h1>Good food. Better moments.</h1>
+    <p>Explore our menu and experience your food in 3D.</p>
+  </section>
+
+  <div class="section-title">
+    Signature Menu
+  </div>
+
+  <main class="menu">
+
+    <div class="item">
+      <div class="food-placeholder">🍔</div>
+      <h3>NOVA Classic Burger</h3>
+      <p class="description">Juicy grilled patty, fresh vegetables and our signature sauce.</p>
+      <div class="bottom">
+        <span class="price">₹249</span>
+        <button class="ar-button">VIEW IN AR</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="food-placeholder">🍕</div>
+      <h3>Truffle Cheese Pizza</h3>
+      <p class="description">Creamy cheese, herbs and a touch of truffle.</p>
+      <div class="bottom">
+        <span class="price">₹329</span>
+        <button class="ar-button">VIEW IN AR</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="food-placeholder">🍝</div>
+      <h3>Creamy Alfredo Pasta</h3>
+      <p class="description">Silky parmesan sauce with perfectly cooked pasta.</p>
+      <div class="bottom">
+        <span class="price">₹279</span>
+        <button class="ar-button">VIEW IN AR</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="food-placeholder">🥪</div>
+      <h3>Grilled Club Sandwich</h3>
+      <p class="description">Crispy grilled bread with fresh vegetables and cheese.</p>
+      <div class="bottom">
+        <span class="price">₹229</span>
+        <button class="ar-button">VIEW IN AR</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="food-placeholder">🍟</div>
+      <h3>Peri Peri Fries</h3>
+      <p class="description">Crispy fries tossed in our signature peri peri seasoning.</p>
+      <div class="bottom">
+        <span class="price">₹149</span>
+        <button class="ar-button">VIEW IN AR</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="food-placeholder">☕</div>
+      <h3>Iced Spanish Latte</h3>
+      <p class="description">Smooth espresso, creamy milk and a hint of sweetness.</p>
+      <div class="bottom">
+        <span class="price">₹189</span>
+        <button class="ar-button">VIEW IN AR</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="food-placeholder">🍰</div>
+      <h3>Lotus Biscoff Cheesecake</h3>
+      <p class="description">Creamy cheesecake topped with Biscoff crumbs.</p>
+      <div class="bottom">
+        <span class="price">₹219</span>
+        <button class="ar-button">VIEW IN AR</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    NOVA Coffee & Kitchen · Jaipur
+  </footer>
+
+</body>
+</html>
