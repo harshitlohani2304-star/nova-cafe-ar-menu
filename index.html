@@ -1,289 +1,1822 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>NOVA — Coffee & Kitchen</title>
 
-  <script type="module"
+  <script
+    type="module"
     src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js">
   </script>
 
+
   <style>
+
+    /* =========================================
+       GLOBAL
+    ========================================= */
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f3ed;
-      color: #1f1b17;
+    :root {
+      --cream: #f6f1e9;
+      --cream2: #eee5d8;
+      --brown: #211b17;
+      --brown2: #4f4034;
+      --muted: #87796b;
+      --gold: #aa9275;
+      --white: #ffffff;
+      --line: #d9cec0;
     }
 
-   header {
-  padding: 25px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    .top-header {
+
+      padding: 32px 55px 28px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 30px;
+
+    }
+
+    .brand {
+      text-align: left;
+    }
+
     .logo {
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: 5px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 52px;
+
+      font-weight: 500;
+
+      letter-spacing: 10px;
+
+      line-height: 1;
+
     }
 
     .tagline {
-      margin-top: 8px;
-      color: #777;
-      font-size: 14px;
+
+      margin-top: 13px;
+
+      color: var(--brown2);
+
+      font-size: 12px;
+
+      letter-spacing: 3px;
+
     }
 
+
+    /* =========================================
+       LOGO PLACEHOLDER
+    ========================================= */
+
+    .hotel-logo {
+
+      width: 260px;
+
+      height: 110px;
+
+      border: 1px dashed #b6a592;
+
+      border-radius: 18px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: #a28f79;
+
+    }
+
+    .logo-icon {
+
+      width: 45px;
+
+      height: 34px;
+
+      border: 2px solid #b6a592;
+
+      border-radius: 4px;
+
+      position: relative;
+
+      margin-bottom: 9px;
+
+    }
+
+    .logo-icon::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 7px;
+
+      height: 7px;
+
+      border: 2px solid #b6a592;
+
+      border-radius: 50%;
+
+      top: 5px;
+
+      left: 6px;
+
+    }
+
+    .logo-icon::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 22px;
+
+      height: 12px;
+
+      border-left: 2px solid #b6a592;
+
+      border-top: 2px solid #b6a592;
+
+      transform: rotate(35deg);
+
+      bottom: 3px;
+
+      right: 4px;
+
+    }
+
+    .hotel-logo span {
+
+      font-size: 11px;
+
+      letter-spacing: 2px;
+
+    }
+
+
+    /* =========================================
+       HERO
+    ========================================= */
+
     .hero {
-      margin: 10px 18px 30px;
-      padding: 35px 25px;
-      border-radius: 24px;
-      background: #27221e;
+
+      margin: 5px 35px 38px;
+
+      min-height: 300px;
+
+      border-radius: 25px;
+
+      overflow: hidden;
+
+      position: relative;
+
       color: white;
-      text-align: center;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 50px 70px;
+
+      background:
+
+        linear-gradient(
+          90deg,
+          rgba(27,20,16,.97),
+          rgba(27,20,16,.80),
+          rgba(27,20,16,.54)
+        ),
+
+        url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=85");
+
+      background-size: cover;
+
+      background-position: center;
+
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .eyebrow {
+
+      font-size: 13px;
+
+      letter-spacing: 4px;
+
+      color: #ded3c7;
+
+      margin-bottom: 20px;
+
     }
 
     .hero h1 {
-      font-size: 30px;
-      margin-bottom: 10px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(42px, 5vw, 65px);
+
+      font-weight: 500;
+
+      line-height: 1.04;
+
+      margin-bottom: 18px;
+
     }
 
     .hero p {
-      color: #d8d0c7;
-      line-height: 1.5;
+
+      color: #eee7df;
+
+      font-size: 18px;
+
+      line-height: 1.6;
+
     }
 
-    .section-title {
-      padding: 0 20px 15px;
-      font-size: 22px;
-      font-weight: 700;
+
+    /* =========================================
+       HERO SCRIPT
+    ========================================= */
+
+    .hero-script {
+
+      width: 250px;
+
+      text-align: center;
+
+      font-family: "Brush Script MT",
+                   "Segoe Script",
+                   cursive;
+
+      font-size: 48px;
+
+      line-height: 1.05;
+
+      color: #dfc6a9;
+
+      transform: rotate(-5deg);
+
     }
 
-    .menu {
-      padding: 0 18px 40px;
-      display: grid;
-      gap: 18px;
+    .hero-script span {
+      display: block;
     }
 
-    .item {
-      background: white;
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    .script-line {
+
+      width: 80px;
+
+      height: 2px;
+
+      background: #dfc6a9;
+
+      margin: 12px auto;
+
     }
 
-    .food-view {
-      height: 260px;
-      width: 100%;
-      border-radius: 16px;
-      background: #eee8df;
-      margin-bottom: 15px;
-    }
 
-    .food-placeholder {
-      height: 180px;
-      border-radius: 16px;
-      background: #eee8df;
+    /* =========================================
+       MENU INTRO
+    ========================================= */
+
+    .menu-intro {
+
+      padding: 0 55px 25px;
+
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 55px;
-      margin-bottom: 15px;
-    }
 
-    .item h3 {
-      font-size: 19px;
-      margin-bottom: 6px;
-    }
-
-    .description {
-      color: #777;
-      font-size: 14px;
-      line-height: 1.4;
-      margin-bottom: 12px;
-    }
-
-    .bottom {
-      display: flex;
-      align-items: center;
       justify-content: space-between;
+
+      align-items: end;
+
+      gap: 20px;
+
+    }
+
+    .menu-intro h2 {
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 44px;
+
+      font-weight: 500;
+
+    }
+
+    .menu-intro-right {
+
+      color: var(--gold);
+
+      font-size: 11px;
+
+      letter-spacing: 2.5px;
+
+      text-align: right;
+
+    }
+
+    .menu-line {
+
+      width: 100%;
+
+      height: 1px;
+
+      background: var(--line);
+
+      margin-top: 18px;
+
+    }
+
+
+    /* =========================================
+       FOOD SECTION
+    ========================================= */
+
+    .food-section {
+
+      margin: 0 35px 38px;
+
+    }
+
+    .food-card {
+
+      background: rgba(255,255,255,.72);
+
+      border: 1px solid rgba(255,255,255,.9);
+
+      border-radius: 26px;
+
+      overflow: hidden;
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      min-height: 470px;
+
+      box-shadow:
+
+        0 15px 45px rgba(55,42,30,.07);
+
+      transition:
+
+        transform .3s ease,
+
+        box-shadow .3s ease;
+
+    }
+
+    .food-card:hover {
+
+      transform: translateY(-4px);
+
+      box-shadow:
+
+        0 22px 55px rgba(55,42,30,.11);
+
+    }
+
+
+    /* =========================================
+       ALTERNATING CARDS
+    ========================================= */
+
+    .food-card.reverse .food-image {
+      order: 2;
+    }
+
+    .food-card.reverse .food-info {
+      order: 1;
+    }
+
+
+    /* =========================================
+       FOOD IMAGE
+    ========================================= */
+
+    .food-image {
+
+      min-height: 470px;
+
+      position: relative;
+
+      overflow: hidden;
+
+      background: #e9e0d4;
+
+    }
+
+    .food-image img {
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+      transition: transform .7s ease;
+
+    }
+
+    .food-card:hover .food-image img {
+
+      transform: scale(1.045);
+
+    }
+
+
+    /* IMAGE OVERLAY */
+
+    .food-image::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      background:
+
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.05),
+          rgba(0,0,0,.20)
+        );
+
+      pointer-events: none;
+
+    }
+
+
+    /* =========================================
+       ITEM NUMBER
+    ========================================= */
+
+    .item-number {
+
+      position: absolute;
+
+      top: 20px;
+
+      left: 20px;
+
+      z-index: 5;
+
+      width: 55px;
+
+      height: 55px;
+
+      border-radius: 50%;
+
+      background: rgba(255,255,255,.86);
+
+      backdrop-filter: blur(8px);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-family: Georgia, serif;
+
+      font-size: 15px;
+
+      color: var(--brown);
+
+    }
+
+
+    /* =========================================
+       3D BADGE
+    ========================================= */
+
+    .preview-badge {
+
+      position: absolute;
+
+      left: 20px;
+
+      bottom: 20px;
+
+      z-index: 6;
+
+      background: rgba(32,26,21,.90);
+
+      color: white;
+
+      padding: 11px 16px;
+
+      border-radius: 30px;
+
+      font-size: 11px;
+
+      letter-spacing: 1px;
+
+      font-weight: 600;
+
+      backdrop-filter: blur(8px);
+
+    }
+
+
+    /* =========================================
+       BURGER 3D VIEW
+    ========================================= */
+
+    .burger-viewer {
+
+      width: 100%;
+
+      height: 100%;
+
+      min-height: 470px;
+
+      background:
+
+        radial-gradient(
+          circle,
+          #fffdf8 0%,
+          #eee5d9 100%
+        );
+
+    }
+
+
+    /* =========================================
+       ROTATE TEXT
+    ========================================= */
+
+    .rotate-text {
+
+      position: absolute;
+
+      bottom: 21px;
+
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      z-index: 8;
+
+      color: #766b61;
+
+      font-size: 12px;
+
+      pointer-events: none;
+
+      background: rgba(255,255,255,.7);
+
+      padding: 7px 12px;
+
+      border-radius: 20px;
+
+    }
+
+
+    /* =========================================
+       FOOD INFORMATION
+    ========================================= */
+
+    .food-info {
+
+      padding: 55px 55px;
+
+      position: relative;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.88),
+          rgba(248,242,234,.68)
+        );
+
+    }
+
+    .category {
+
+      color: var(--gold);
+
+      font-size: 11px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 20px;
+
+    }
+
+    .food-info h3 {
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(32px, 3vw, 46px);
+
+      line-height: 1.05;
+
+      font-weight: 500;
+
+      margin-bottom: 17px;
+
+    }
+
+    .food-info .description {
+
+      max-width: 470px;
+
+      color: #74695f;
+
+      font-size: 15px;
+
+      line-height: 1.7;
+
+      margin-bottom: 28px;
+
+    }
+
+
+    /* =========================================
+       PRICE
+    ========================================= */
+
+    .price-row {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      margin-bottom: 27px;
+
     }
 
     .price {
-      font-weight: 700;
-      font-size: 18px;
+
+      font-family: Georgia, serif;
+
+      font-size: 29px;
+
+      font-weight: 600;
+
     }
+
+    .small-note {
+
+      color: #9b8c7d;
+
+      font-size: 11px;
+
+      letter-spacing: 1px;
+
+    }
+
+
+    /* =========================================
+       BUTTON
+    ========================================= */
 
     .ar-button {
-      background: #27221e;
+
+      width: fit-content;
+
+      min-width: 175px;
+
+      background: var(--brown);
+
       color: white;
+
       border: none;
-      padding: 11px 15px;
-      border-radius: 30px;
-      font-size: 13px;
+
+      border-radius: 12px;
+
+      padding: 15px 22px;
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+      letter-spacing: 1.5px;
+
       cursor: pointer;
+
+      transition:
+
+        transform .2s ease,
+
+        background .2s ease;
+
     }
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #888;
-      font-size: 13px;
+    .ar-button:hover {
+
+      background: #44382f;
+
+      transform: translateY(-2px);
+
     }
+
+
+    /* =========================================
+       DECORATIVE LINE
+    ========================================= */
+
+    .decorative-line {
+
+      width: 70px;
+
+      height: 1px;
+
+      background: #b9a58e;
+
+      margin: 28px 0;
+
+    }
+
+
+    /* =========================================
+       DECORATIVE CIRCLE
+    ========================================= */
+
+    .circle-decoration {
+
+      position: absolute;
+
+      right: 35px;
+
+      bottom: 30px;
+
+      width: 100px;
+
+      height: 100px;
+
+      border: 1px solid rgba(169,145,117,.35);
+
+      border-radius: 50%;
+
+      pointer-events: none;
+
+    }
+
+    .circle-decoration::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 12px;
+
+      border: 1px solid rgba(169,145,117,.2);
+
+      border-radius: 50%;
+
+    }
+
+
+    /* =========================================
+       OTHER IMAGE CARDS
+    ========================================= */
+
+    .photo-card {
+
+      position: relative;
+
+      width: 100%;
+
+      height: 100%;
+
+    }
+
+    .photo-card img {
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    footer {
+
+      margin-top: 10px;
+
+      border-top: 1px solid var(--line);
+
+      text-align: center;
+
+      padding: 35px 20px;
+
+      color: #8b7d70;
+
+      font-size: 11px;
+
+      letter-spacing: 2px;
+
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 800px) {
+
+      .top-header {
+
+        padding: 23px 18px;
+
+      }
+
+      .logo {
+
+        font-size: 35px;
+
+        letter-spacing: 6px;
+
+      }
+
+      .tagline {
+
+        font-size: 9px;
+
+        letter-spacing: 1.5px;
+
+      }
+
+      .hotel-logo {
+
+        width: 125px;
+
+        height: 75px;
+
+      }
+
+      .hotel-logo span {
+
+        font-size: 8px;
+
+      }
+
+
+      .hero {
+
+        margin: 5px 14px 30px;
+
+        min-height: 370px;
+
+        padding: 35px 25px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        justify-content: center;
+
+      }
+
+      .eyebrow {
+
+        font-size: 10px;
+
+        letter-spacing: 2px;
+
+      }
+
+      .hero h1 {
+
+        font-size: 37px;
+
+      }
+
+      .hero p {
+
+        font-size: 15px;
+
+      }
+
+      .hero-script {
+
+        align-self: flex-end;
+
+        width: 170px;
+
+        font-size: 36px;
+
+        margin-top: 25px;
+
+      }
+
+
+      .menu-intro {
+
+        padding: 0 20px 22px;
+
+        display: block;
+
+      }
+
+      .menu-intro h2 {
+
+        font-size: 33px;
+
+      }
+
+      .menu-intro-right {
+
+        margin-top: 10px;
+
+        text-align: left;
+
+        line-height: 1.8;
+
+      }
+
+
+      .food-section {
+
+        margin: 0 14px 25px;
+
+      }
+
+      .food-card {
+
+        grid-template-columns: 1fr;
+
+        min-height: auto;
+
+        border-radius: 21px;
+
+      }
+
+      .food-card.reverse .food-image {
+
+        order: 1;
+
+      }
+
+      .food-card.reverse .food-info {
+
+        order: 2;
+
+      }
+
+      .food-image {
+
+        min-height: 330px;
+
+        height: 330px;
+
+      }
+
+      .burger-viewer {
+
+        min-height: 330px;
+
+      }
+
+      .food-info {
+
+        padding: 35px 25px 40px;
+
+        min-height: 330px;
+
+      }
+
+      .food-info h3 {
+
+        font-size: 31px;
+
+      }
+
+      .food-info .description {
+
+        font-size: 14px;
+
+      }
+
+      .price-row {
+
+        margin-bottom: 20px;
+
+      }
+
+      .ar-button {
+
+        width: 100%;
+
+      }
+
+      .circle-decoration {
+
+        width: 70px;
+
+        height: 70px;
+
+        right: 20px;
+
+        bottom: 20px;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+  <!-- =========================================
+       HEADER
+  ========================================= -->
+
   <header class="top-header">
 
-  <div>
-    <div class="logo">NOVA</div>
-    <div class="tagline">COFFEE & KITCHEN · JAIPUR</div>
-  </div>
+    <div class="brand">
 
-  <div class="hotel-logo">
-    <span>YOUR LOGO</span>
-  </div>
+      <div class="logo">
+        NOVA
+      </div>
 
-</header>
+      <div class="tagline">
+        COFFEE & KITCHEN · JAIPUR
+      </div>
+
+    </div>
+
+
+    <div class="hotel-logo">
+
+      <div class="logo-icon"></div>
+
+      <span>
+        YOUR LOGO HERE
+      </span>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================================
+       HERO
+  ========================================= -->
 
   <section class="hero">
-    <h1>Good food. Better moments.</h1>
-    <p>Explore our menu and experience your food in 3D.</p>
-  </section>
 
-  <div class="section-title">Signature Menu</div>
+    <div class="hero-content">
 
-  <main class="menu">
+      <div class="eyebrow">
+        GREAT FOOD. BRIGHTER DAYS.
+      </div>
 
-    <!-- BURGER -->
-    <div class="item">
+      <h1>
+        Good food. Better moments.
+      </h1>
 
-      <model-viewer
-        class="food-view"
-        src="https://raw.githubusercontent.com/harshitlohani2304-star/nova-cafe-ar-menu/main/hamburger-060fd6.glb"
-        camera-controls
-        auto-rotate
-        ar
-        ar-modes="webxr scene-viewer quick-look"
-        shadow-intensity="1"
-        exposure="1">
-      </model-viewer>
-
-      <h3>NOVA Classic Burger</h3>
-
-      <p class="description">
-        Juicy grilled patty, fresh vegetables and our signature sauce.
+      <p>
+        Explore our menu and experience your food in 3D.
       </p>
 
-      <div class="bottom">
-        <span class="price">₹249</span>
+    </div>
+
+
+    <div class="hero-script">
+
+      <span>Food</span>
+      <span>People</span>
+      <span>Moments</span>
+
+      <div class="script-line"></div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================
+       MENU INTRO
+  ========================================= -->
+
+  <section class="menu-intro">
+
+    <div>
+
+      <h2>
+        Signature Menu
+      </h2>
+
+      <div class="menu-line"></div>
+
+    </div>
+
+    <div class="menu-intro-right">
+
+      FRESH INGREDIENTS
+      &nbsp; | &nbsp;
+
+      BOLD FLAVOURS
+      &nbsp; | &nbsp;
+
+      MEMORABLE MOMENTS
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================
+       01 BURGER
+  ========================================= -->
+
+  <section class="food-section">
+
+    <div class="food-card">
+
+      <div class="food-image">
+
+        <div class="item-number">
+          01
+        </div>
+
+        <div class="preview-badge">
+          ◇ &nbsp; 3D + AR PREVIEW
+        </div>
+
+
+        <model-viewer
+
+          class="burger-viewer"
+
+          src="https://raw.githubusercontent.com/harshitlohani2304-star/nova-cafe-ar-menu/main/hamburger-060fd6.glb"
+
+          camera-controls
+
+          auto-rotate
+
+          ar
+
+          ar-modes="webxr scene-viewer quick-look"
+
+          shadow-intensity="1"
+
+          exposure="1">
+
+        </model-viewer>
+
+
+        <div class="rotate-text">
+          Drag to rotate
+        </div>
+
+      </div>
+
+
+      <div class="food-info">
+
+        <div class="category">
+          SIGNATURE · BURGER
+        </div>
+
+        <h3>
+          NOVA Classic Burger
+        </h3>
+
+        <div class="decorative-line"></div>
+
+        <p class="description">
+
+          Juicy grilled patty, fresh vegetables
+          and our signature sauce, layered inside
+          a soft toasted sesame bun.
+
+        </p>
+
+
+        <div class="price-row">
+
+          <div class="price">
+            ₹249
+          </div>
+
+          <div class="small-note">
+            NOVA SIGNATURE
+          </div>
+
+        </div>
+
+
         <button
           class="ar-button"
           onclick="document.querySelector('model-viewer').activateAR()">
-          VIEW IN AR
+
+          ◇ &nbsp; VIEW IN AR
+
         </button>
+
+
+        <div class="circle-decoration"></div>
+
       </div>
 
     </div>
 
+  </section>
 
-    <!-- PIZZA -->
-    <div class="item">
-      <div class="food-placeholder">🍕</div>
-      <h3>Truffle Cheese Pizza</h3>
-      <p class="description">
-        Creamy cheese, herbs and a touch of truffle.
-      </p>
-      <div class="bottom">
-        <span class="price">₹329</span>
-        <button class="ar-button">VIEW IN AR</button>
+
+
+  <!-- =========================================
+       02 PIZZA
+  ========================================= -->
+
+  <section class="food-section">
+
+    <div class="food-card reverse">
+
+      <div class="food-image">
+
+        <div class="item-number">
+          02
+        </div>
+
+        <div class="preview-badge">
+          ◇ &nbsp; 3D + AR PREVIEW
+        </div>
+
+        <div class="photo-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1200&q=85"
+            alt="Truffle Cheese Pizza">
+
+        </div>
+
       </div>
+
+
+      <div class="food-info">
+
+        <div class="category">
+          SIGNATURE · PIZZA
+        </div>
+
+        <h3>
+          Truffle Cheese Pizza
+        </h3>
+
+        <div class="decorative-line"></div>
+
+        <p class="description">
+
+          A rich combination of melted cheese,
+          aromatic herbs and delicate truffle
+          notes on our freshly baked crust.
+
+        </p>
+
+
+        <div class="price-row">
+
+          <div class="price">
+            ₹329
+          </div>
+
+          <div class="small-note">
+            CHEF'S SPECIAL
+          </div>
+
+        </div>
+
+
+        <button
+          class="ar-button"
+          onclick="comingSoon('Truffle Cheese Pizza')">
+
+          ◇ &nbsp; VIEW IN AR
+
+        </button>
+
+
+        <div class="circle-decoration"></div>
+
+      </div>
+
     </div>
 
+  </section>
 
-    <!-- PASTA -->
-    <div class="item">
-      <div class="food-placeholder">🍝</div>
-      <h3>Creamy Alfredo Pasta</h3>
-      <p class="description">
-        Silky parmesan sauce with perfectly cooked pasta.
-      </p>
-      <div class="bottom">
-        <span class="price">₹279</span>
-        <button class="ar-button">VIEW IN AR</button>
+
+
+  <!-- =========================================
+       03 PASTA
+  ========================================= -->
+
+  <section class="food-section">
+
+    <div class="food-card">
+
+      <div class="food-image">
+
+        <div class="item-number">
+          03
+        </div>
+
+        <div class="preview-badge">
+          ◇ &nbsp; 3D + AR PREVIEW
+        </div>
+
+        <div class="photo-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1200&q=85"
+            alt="Creamy Alfredo Pasta">
+
+        </div>
+
       </div>
+
+
+      <div class="food-info">
+
+        <div class="category">
+          SIGNATURE · PASTA
+        </div>
+
+        <h3>
+          Creamy Alfredo Pasta
+        </h3>
+
+        <div class="decorative-line"></div>
+
+        <p class="description">
+
+          Silky parmesan cream sauce tossed
+          with perfectly cooked pasta and
+          finished with fresh herbs.
+
+        </p>
+
+
+        <div class="price-row">
+
+          <div class="price">
+            ₹279
+          </div>
+
+          <div class="small-note">
+            HOUSE FAVOURITE
+          </div>
+
+        </div>
+
+
+        <button
+          class="ar-button"
+          onclick="comingSoon('Creamy Alfredo Pasta')">
+
+          ◇ &nbsp; VIEW IN AR
+
+        </button>
+
+
+        <div class="circle-decoration"></div>
+
+      </div>
+
     </div>
 
+  </section>
 
-    <!-- SANDWICH -->
-    <div class="item">
-      <div class="food-placeholder">🥪</div>
-      <h3>Grilled Club Sandwich</h3>
-      <p class="description">
-        Crispy grilled bread with fresh vegetables and cheese.
-      </p>
-      <div class="bottom">
-        <span class="price">₹229</span>
-        <button class="ar-button">VIEW IN AR</button>
+
+
+  <!-- =========================================
+       04 SANDWICH
+  ========================================= -->
+
+  <section class="food-section">
+
+    <div class="food-card reverse">
+
+      <div class="food-image">
+
+        <div class="item-number">
+          04
+        </div>
+
+        <div class="preview-badge">
+          ◇ &nbsp; 3D + AR PREVIEW
+        </div>
+
+        <div class="photo-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1528735602780-2552fd46c7b2?auto=format&fit=crop&w=1200&q=85"
+            alt="Grilled Club Sandwich">
+
+        </div>
+
       </div>
+
+
+      <div class="food-info">
+
+        <div class="category">
+          SIGNATURE · SANDWICH
+        </div>
+
+        <h3>
+          Grilled Club Sandwich
+        </h3>
+
+        <div class="decorative-line"></div>
+
+        <p class="description">
+
+          Crispy grilled bread layered with
+          fresh vegetables, creamy cheese
+          and our house dressing.
+
+        </p>
+
+
+        <div class="price-row">
+
+          <div class="price">
+            ₹229
+          </div>
+
+          <div class="small-note">
+            ALL DAY FAVOURITE
+          </div>
+
+        </div>
+
+
+        <button
+          class="ar-button"
+          onclick="comingSoon('Grilled Club Sandwich')">
+
+          ◇ &nbsp; VIEW IN AR
+
+        </button>
+
+
+        <div class="circle-decoration"></div>
+
+      </div>
+
     </div>
 
+  </section>
 
-    <!-- FRIES -->
-    <div class="item">
-      <div class="food-placeholder">🍟</div>
-      <h3>Peri Peri Fries</h3>
-      <p class="description">
-        Crispy fries tossed in our signature peri peri seasoning.
-      </p>
-      <div class="bottom">
-        <span class="price">₹149</span>
-        <button class="ar-button">VIEW IN AR</button>
+
+
+  <!-- =========================================
+       05 FRIES
+  ========================================= -->
+
+  <section class="food-section">
+
+    <div class="food-card">
+
+      <div class="food-image">
+
+        <div class="item-number">
+          05
+        </div>
+
+        <div class="preview-badge">
+          ◇ &nbsp; 3D + AR PREVIEW
+        </div>
+
+        <div class="photo-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=1200&q=85"
+            alt="Peri Peri Fries">
+
+        </div>
+
       </div>
+
+
+      <div class="food-info">
+
+        <div class="category">
+          SIDES · FRIES
+        </div>
+
+        <h3>
+          Peri Peri Fries
+        </h3>
+
+        <div class="decorative-line"></div>
+
+        <p class="description">
+
+          Golden crispy fries tossed in
+          our signature peri peri seasoning
+          for the perfect spicy finish.
+
+        </p>
+
+
+        <div class="price-row">
+
+          <div class="price">
+            ₹149
+          </div>
+
+          <div class="small-note">
+            PERFECT SIDE
+          </div>
+
+        </div>
+
+
+        <button
+          class="ar-button"
+          onclick="comingSoon('Peri Peri Fries')">
+
+          ◇ &nbsp; VIEW IN AR
+
+        </button>
+
+
+        <div class="circle-decoration"></div>
+
+      </div>
+
     </div>
 
+  </section>
 
-    <!-- LATTE -->
-    <div class="item">
-      <div class="food-placeholder">☕</div>
-      <h3>Iced Spanish Latte</h3>
-      <p class="description">
-        Smooth espresso, creamy milk and a hint of sweetness.
-      </p>
-      <div class="bottom">
-        <span class="price">₹189</span>
-        <button class="ar-button">VIEW IN AR</button>
+
+
+  <!-- =========================================
+       06 LATTE
+  ========================================= -->
+
+  <section class="food-section">
+
+    <div class="food-card reverse">
+
+      <div class="food-image">
+
+        <div class="item-number">
+          06
+        </div>
+
+        <div class="preview-badge">
+          ◇ &nbsp; 3D + AR PREVIEW
+        </div>
+
+        <div class="photo-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1200&q=85"
+            alt="Iced Spanish Latte">
+
+        </div>
+
       </div>
+
+
+      <div class="food-info">
+
+        <div class="category">
+          BEVERAGES · COFFEE
+        </div>
+
+        <h3>
+          Iced Spanish Latte
+        </h3>
+
+        <div class="decorative-line"></div>
+
+        <p class="description">
+
+          Smooth espresso blended with
+          creamy milk and a subtle sweetness,
+          served chilled over ice.
+
+        </p>
+
+
+        <div class="price-row">
+
+          <div class="price">
+            ₹189
+          </div>
+
+          <div class="small-note">
+            COLD & CREAMY
+          </div>
+
+        </div>
+
+
+        <button
+          class="ar-button"
+          onclick="comingSoon('Iced Spanish Latte')">
+
+          ◇ &nbsp; VIEW IN AR
+
+        </button>
+
+
+        <div class="circle-decoration"></div>
+
+      </div>
+
     </div>
 
+  </section>
 
-    <!-- CHEESECAKE -->
-    <div class="item">
-      <div class="food-placeholder">🍰</div>
-      <h3>Lotus Biscoff Cheesecake</h3>
-      <p class="description">
-        Creamy cheesecake topped with Biscoff crumbs.
-      </p>
-      <div class="bottom">
-        <span class="price">₹219</span>
-        <button class="ar-button">VIEW IN AR</button>
+
+
+  <!-- =========================================
+       07 CHEESECAKE
+  ========================================= -->
+
+  <section class="food-section">
+
+    <div class="food-card">
+
+      <div class="food-image">
+
+        <div class="item-number">
+          07
+        </div>
+
+        <div class="preview-badge">
+          ◇ &nbsp; 3D + AR PREVIEW
+        </div>
+
+        <div class="photo-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1200&q=85"
+            alt="Lotus Biscoff Cheesecake">
+
+        </div>
+
       </div>
+
+
+      <div class="food-info">
+
+        <div class="category">
+          DESSERT · CHEESECAKE
+        </div>
+
+        <h3>
+          Lotus Biscoff Cheesecake
+        </h3>
+
+        <div class="decorative-line"></div>
+
+        <p class="description">
+
+          Creamy cheesecake layered with
+          caramelised Biscoff flavour and
+          finished with a delicate biscuit crumb.
+
+        </p>
+
+
+        <div class="price-row">
+
+          <div class="price">
+            ₹219
+          </div>
+
+          <div class="small-note">
+            SWEET FINALE
+          </div>
+
+        </div>
+
+
+        <button
+          class="ar-button"
+          onclick="comingSoon('Lotus Biscoff Cheesecake')">
+
+          ◇ &nbsp; VIEW IN AR
+
+        </button>
+
+
+        <div class="circle-decoration"></div>
+
+      </div>
+
     </div>
 
-  </main>
+  </section>
+
+
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
 
   <footer>
-    NOVA Coffee & Kitchen · Jaipur
+
+    NOVA COFFEE & KITCHEN · JAIPUR
+
   </footer>
 
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================= -->
+
+  <script>
+
+    function comingSoon(foodName) {
+
+      alert(
+        foodName +
+        " 3D/AR model will be available soon."
+      );
+
+    }
+
+  </script>
+
+
 </body>
+
 </html>
