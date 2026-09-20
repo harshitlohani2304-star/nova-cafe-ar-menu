@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NOVA — Order Dashboard</title>
+<style>
+:root{--ink:#241b15;--muted:#786d63;--paper:#f6f0e7;--card:#fffdf9;--line:#e5dbcf;--green:#285b45;--amber:#9a6a22;--blue:#315a78}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,sans-serif}
+header{padding:24px 28px;border-bottom:1px solid var(--line);background:#fbf7f0;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:5}
+.brand{font-family:Georgia,serif;font-size:30px;letter-spacing:3px}.sub{font-size:10px;letter-spacing:2px;color:var(--muted);margin-top:4px}
+.refresh{border:1px solid var(--ink);background:var(--ink);color:white;border-radius:999px;padding:11px 17px;font-weight:700;cursor:pointer}
+main{padding:24px;max-width:1400px;margin:auto}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--line);padding:18px;border-radius:16px}.stat b{display:block;font-size:27px;margin-top:5px}.stat span{font-size:10px;letter-spacing:1.5px;color:var(--muted)}
+.board{display:grid;grid-template-columns:repeat(4,minmax(240px,1fr));gap:14px;align-items:start}
+.column{background:#eee7de;border-radius:18px;padding:12px;min-height:300px}
+.colhead{display:flex;justify-content:space-between;align-items:center;padding:5px 5px 12px;font-size:11px;letter-spacing:1.5px;font-weight:800}
+.count{background:white;border-radius:999px;padding:5px 9px;font-size:11px}
+.order{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:15px;margin-bottom:11px;box-shadow:0 4px 14px rgba(36,27,21,.05)}
+.order-top{display:flex;justify-content:space-between;gap:10px}.order-id{font-weight:800}.time{font-size:11px;color:var(--muted)}
+.table{margin:10px 0;font-size:12px;font-weight:800;letter-spacing:1px}
+.items{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:9px 0;margin:9px 0}
+.item{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:3px 0}.qty{font-weight:800}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:15px}
+.customer{font-size:12px;color:var(--muted);margin:8px 0}
+.actions{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}.actions button{border:0;border-radius:999px;padding:9px 12px;font-size:10px;font-weight:800;letter-spacing:.7px;cursor:pointer;background:#eadfd2;color:var(--ink)}
+.actions .next{background:var(--ink);color:white}.empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:12px}
+.error{background:#fff1ed;border:1px solid #e7b8aa;color:#8b3828;padding:13px 15px;border-radius:12px;margin-bottom:18px;display:none}
+@media(max-width:950px){.board{grid-template-columns:repeat(2,minmax(260px,1fr))}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){header{padding:18px}.brand{font-size:24px}main{padding:14px}.board{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="brand">NOVA</div><div class="sub">COFFEE &amp; KITCHEN · ORDER DASHBOARD</div></div>
+  <button class="refresh" onclick="loadOrders()">REFRESH ORDERS</button>
+</header>
+<main>
+  <div id="error" class="error"></div>
+  <section class="stats">
+    <div class="stat"><span>NEW</span><b id="sNew">0</b></div>
+    <div class="stat"><span>PREPARING</span><b id="sPreparing">0</b></div>
+    <div class="stat"><span>READY</span><b id="sReady">0</b></div>
+    <div class="stat"><span>TODAY'S ORDERS</span><b id="sToday">0</b></div>
+  </section>
+  <section class="board">
+    <div class="column"><div class="colhead">NEW <span class="count" id="cNew">0</span></div><div id="new"></div></div>
+    <div class="column"><div class="colhead">PREPARING <span class="count" id="cPreparing">0</span></div><div id="preparing"></div></div>
+    <div class="column"><div class="colhead">READY <span class="count" id="cReady">0</span></div><div id="ready"></div></div>
+    <div class="column"><div class="colhead">PAID <span class="count" id="cPaid">0</span></div><div id="paid"></div></div>
+  </section>
+</main>
+<script>
+const API="https://script.google.com/macros/s/AKfycbwrovQE2kmR9rLkpGTeoPVGO8KbXndCMCYWEBPstXCA2CLGfxB2UymxX6NljgrBpjbSKg/exec";
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function normalize(raw){
+  if(Array.isArray(raw)) return raw;
+  if(raw && Array.isArray(raw.orders)) return raw.orders;
+  if(raw && raw.data && Array.isArray(raw.data)) return raw.data;
+  return [];
+}
+function loadOrders(){
+  const err=document.getElementById("error");err.style.display="none";
+  const oldScript=document.getElementById("ordersJsonp");
+  if(oldScript) oldScript.remove();
+
+  const callback="novaOrdersCallback";
+  window[callback]=function(data){
+    try{
+      render(normalize(data));
+      if(window._novaJsonpTimer) clearTimeout(window._novaJsonpTimer);
+    }catch(e){
+      err.textContent="Could not read orders from the backend.";
+      err.style.display="block";
+    }
+    const s=document.getElementById("ordersJsonp"); if(s) s.remove();
+  };
+
+  const s=document.createElement("script");
+  s.id="ordersJsonp";
+  s.src=API+"?dashboard=1&key=nova123&callback="+callback+"&t="+Date.now();
+  s.onerror=function(){
+    err.textContent="Dashboard is not connected to the order backend yet. The customer ordering page is not changed.";
+    err.style.display="block";
+    s.remove();
+  };
+  document.body.appendChild(s);
+}
+function render(orders){
+  const cols={NEW:[],PREPARING:[],READY:[],PAID:[]};
+  orders.forEach(o=>{let s=String(o.status||"NEW").toUpperCase();if(!cols[s])s="NEW";cols[s].push(o)});
+  ["NEW","PREPARING","READY","PAID"].forEach(s=>{
+    const key=s.toLowerCase();document.getElementById(key).innerHTML=cols[s].length?cols[s].map(card).join(""):'<div class="empty">No orders</div>';
+    document.getElementById("c"+s[0]+s.slice(1).toLowerCase()).textContent=cols[s].length;
+  });
+  document.getElementById("sNew").textContent=cols.NEW.length;
+  document.getElementById("sPreparing").textContent=cols.PREPARING.length;
+  document.getElementById("sReady").textContent=cols.READY.length;
+  document.getElementById("sToday").textContent=orders.filter(o=>sameDay(o.time)).length;
+}
+function sameDay(v){if(!v)return false;const d=new Date(v),n=new Date();return !isNaN(d)&&d.toDateString()===n.toDateString();}
+function card(o){
+  const status=String(o.status||"NEW").toUpperCase();
+  const id=o.orderId||o.id||"NOVA";
+  const table=o.table||"—", customer=o.customer||"Guest";
+  let items=o.items||[];
+  if(typeof items==="string"){
+    items=items.split("|").map(x=>{
+      const m=x.trim().match(/^(\\d+(?:\\.\\d+)?)\\s*[×x]\\s*(.+)$/);
+      return m?{qty:Number(m[1]),name:m[2].trim(),price:0}:{qty:1,name:x.trim(),price:0};
+    }).filter(x=>x.name);
+  }
+  const total=o.total??items.reduce((a,i)=>a+(Number(i.price)||0)*(Number(i.qty)||0),0);
+  let next=status==="NEW"?"PREPARING":status==="PREPARING"?"READY":status==="READY"?"PAID":null;
+  return `<article class="order"><div class="order-top"><div class="order-id">#${esc(id)}</div><div class="time">${esc(o.timestamp||o.time||"")}</div></div>
+  <div class="table">TABLE · ${esc(table)}</div><div class="customer">Customer: ${esc(customer)}</div>
+  <div class="items">${items.map(i=>`<div class="item"><span><span class="qty">${esc(i.qty)}×</span> ${esc(i.name)}</span><span>₹${(Number(i.price)||0)*(Number(i.qty)||0)}</span></div>`).join("")}</div>
+  <div class="total"><span>TOTAL</span><span>₹${Number(total)||0}</span></div>
+  ${next?`<div class="actions"><button class="next" onclick="updateStatus('${esc(id)}','${next}')">MARK ${next}</button></div>`:""}</article>`;
+}
+async function updateStatus(id,status){
+  try{
+    await fetch(API,{method:"POST",mode:"no-cors",body:new URLSearchParams({action:"updateStatus",key:"nova123",sessionId:id,status})});
+    setTimeout(loadOrders,700);
+  }catch(e){alert("Could not update order status.");}
+}
+loadOrders();setInterval(loadOrders,10000);
+</script>
+</body>
+</html>
