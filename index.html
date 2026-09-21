@@ -2049,13 +2049,6 @@
          * hidden iframe. This does not depend on CORS or fetch responses.
          * Apps Script receives the GET in doGet() and saves the order.
          */
-        const query =
-          "?action=newOrder" +
-          "&payload=" +
-          encodeURIComponent(JSON.stringify(order)) +
-          "&t=" +
-          Date.now();
-
         const iframe = document.createElement("iframe");
         iframe.name = "novaOrderFrame_" + Date.now();
         iframe.style.display = "none";
@@ -2063,9 +2056,31 @@
 
         const form = document.createElement("form");
         form.method = "GET";
-        form.action = ORDER_API_URL + query;
+        form.action = ORDER_API_URL;
         form.target = iframe.name;
         form.style.display = "none";
+
+        // IMPORTANT: put GET parameters in hidden inputs.
+        // A GET form can replace query parameters that are placed directly
+        // in form.action, which was causing the order payload to disappear.
+        const actionInput = document.createElement("input");
+        actionInput.type = "hidden";
+        actionInput.name = "action";
+        actionInput.value = "newOrder";
+        form.appendChild(actionInput);
+
+        const payloadInput = document.createElement("input");
+        payloadInput.type = "hidden";
+        payloadInput.name = "payload";
+        payloadInput.value = JSON.stringify(order);
+        form.appendChild(payloadInput);
+
+        const cacheInput = document.createElement("input");
+        cacheInput.type = "hidden";
+        cacheInput.name = "t";
+        cacheInput.value = String(Date.now());
+        form.appendChild(cacheInput);
+
         document.body.appendChild(form);
         form.submit();
 
