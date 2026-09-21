@@ -2045,10 +2045,9 @@
 
       try {
         /*
-         * IMPORTANT:
-         * Use a GET beacon instead of fetch().
-         * This avoids browser CORS/no-cors issues with Google Apps Script.
-         * The Apps Script doGet() endpoint receives and stores the order.
+         * Send the order with a real browser GET form submission to a
+         * hidden iframe. This does not depend on CORS or fetch responses.
+         * Apps Script receives the GET in doGet() and saves the order.
          */
         const query =
           "?action=newOrder" +
@@ -2057,13 +2056,20 @@
           "&t=" +
           Date.now();
 
-        const beacon = new Image();
-        beacon.src = ORDER_API_URL + query;
+        const iframe = document.createElement("iframe");
+        iframe.name = "novaOrderFrame_" + Date.now();
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
 
-        /*
-         * Give the browser a moment to send the request,
-         * then show the normal confirmation.
-         */
+        const form = document.createElement("form");
+        form.method = "GET";
+        form.action = ORDER_API_URL + query;
+        form.target = iframe.name;
+        form.style.display = "none";
+        document.body.appendChild(form);
+        form.submit();
+
+        // Give the browser time to send the request before clearing the cart.
         setTimeout(function() {
           cart = {};
           updateCart();
@@ -2071,7 +2077,11 @@
           showOrderPlaced();
           button.disabled = false;
           button.textContent = "PLACE ORDER";
-        }, 900);
+          setTimeout(function() {
+            form.remove();
+            iframe.remove();
+          }, 5000);
+        }, 1500);
 
       } catch (error) {
         console.error(error);
